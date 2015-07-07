@@ -1,0 +1,26 @@
+Detalles del Torneo
+<input ng-model="tournament.name">
+<input ng-model="tournament.category">
+<input ng-model="tournament.place">
+
+<button ng-click="save()">Guardar</button>
+<button ng-click="reset()">Reset</button>
+<button><a href="/equipos">Cancel</a></button>
+<br>
+Partidos:
+<form>
+  <label>Equipo1
+    <select ng-options="team.name for team in teams" ng-model="newMatch.team1"></select>
+  </label>
+  <label>Equipo2
+    <select ng-options="team.name for team in teams" ng-model="newMatch.team2"></select>
+  </label>
+  <button ng-click="save(newMatch);newMatch='';">Add</button>
+</form>
+
+<ul>
+  <li ng-repeat="match in matches">
+    Hay un partido aquí
+    <button ng-click="console.log(match)">X</button>
+  </li>
+</ul>

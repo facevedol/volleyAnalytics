@@ -1,0 +1,17 @@
+<form>
+  <label>Nombre</label>
+  <input ng-model="newTeam.name">
+  <label>Nombre Corto</label>
+  <input ng-model="newTeam.shortName">
+  <label>Institución</label>
+  <input ng-model="newTeam.institution">
+  <button ng-click="teams.save(newTeam); newTeam='';">Add</button>
+</form>
+
+<ul>
+  <li ng-repeat="team in teams">
+    <a href="/equipos/{{team._id}}">{{team.name}}</a>
+    <p>{{team.institution}}</p>
+    <button ng-click="remove(team)">X</button>
+  </li>
+</ul>

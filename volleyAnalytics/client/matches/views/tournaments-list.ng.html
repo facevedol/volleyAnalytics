@@ -1,0 +1,17 @@
+<form>
+  <label>Nombre</label>
+  <input ng-model="newTournament.name">
+  <label>Categoría</label>
+  <input ng-model="newTournament.category">
+  <label>Lugar</label>
+  <input ng-model="newTournament.place">
+  <button ng-click="tournaments.save(newTournament); newTournament='';">Add</button>
+</form>
+
+<ul>
+  <li ng-repeat="tournament in tournaments">
+    <a href="/torneos/{{tournament._id}}">{{tournament.name}}</a>
+    <p>{{tournament.place}}</p>
+    <button ng-click="remove(tournament)">X</button>
+  </li>
+</ul>

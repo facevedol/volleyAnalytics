@@ -1,0 +1,36 @@
+Detalles del Equipo
+<input ng-model="team.name">
+<input ng-model="team.shortName">
+<input ng-model="team.institution">
+
+
+<button ng-click="save()">Guardar</button>
+<button ng-click="reset()">Reset</button>
+<button><a href="/equipos">Cancel</a></button>
+
+Jugadores:
+<form>
+  <label>Nombre</label>
+  <input ng-model="newPlayer.name">
+  <label>Edad</label>
+  <input ng-model="newPlayer.age">
+  <label>Número Camiseta</label>
+  <input ng-model="newPlaer.number">
+  <label>Posición</label>
+  <select ng-model="newPlayer.position">
+    <option value="C">Central</option>
+    <option value="A">Armador</option>
+    <option value="P">Punta</option>
+    <option value="L">Líbero</option>
+    <option value="OP">Opuesto</option>
+  </select>
+  <button ng-click="newPlayer.team=team._id;players.save(newPlayer);newPlayer='';">Add</button>
+</form>
+
+<ul>
+  <li ng-repeat="p in players | inTeam:team">
+    <strong>{{p.name}}</strong> -
+    {{p.position}}
+    <button ng-click="remove(player)">X</button>
+  </li>
+</ul>
