@@ -4,4 +4,29 @@ angular.module('volleyAnalytics').controller('MatchDetailsCtrl', ['$scope', '$st
       $scope.team1 = $meteor.object(Teams, $scope.match.team1.team, false);
       $scope.team2 = $meteor.object(Teams, $scope.match.team2.team, false);
       $scope.players = $meteor.collection(Players);
+
+      $scope.keyboard = {
+        'team1': {
+          'team': $scope.team1,
+          'keys': {
+            'q': null,
+            'w': null,
+            'e': null,
+            'a': null,
+            's': null,
+            'd': null,
+          }
+        },
+        'team2': {
+          'team': $scope.team2,
+          'keys': {
+            'q': null,
+            'w': null,
+            'e': null,
+            'a': null,
+            's': null,
+            'd': null,
+          }
+        },
+      };
 }]);

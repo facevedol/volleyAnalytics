@@ -4,10 +4,27 @@ angular.module('volleyAnalytics').config(['$urlRouterProvider', '$stateProvider'
     $locationProvider.html5Mode(true);
 
     $stateProvider
+      // .state('matchDetails', {
+      //   url: '/partidos/:matchId',
+      //   templateUrl: 'client/matches/views/match-details.ng.html',
+      //   controller: 'MatchDetailsCtrl'
+      // })
       .state('matchDetails', {
         url: '/partidos/:matchId',
-        templateUrl: 'client/matches/views/match-details.ng.html',
-        controller: 'MatchDetailsCtrl'
+        views: {
+          '': {
+            templateUrl: 'client/matches/views/match-details.ng.html',
+            controller: 'MatchDetailsCtrl'
+          },
+          'teamList@matchDetails': {
+            templateUrl: 'client/matches/views/team-list.ng.html',
+            controller: 'TeamsListsCtrl'
+          },
+          'keyboardLayout@matchDetails': {
+            templateUrl: 'client/matches/views/keyboard-layout.ng.html',
+            controller: 'KeyboardLayoutCtrl'
+          }
+        }
       })
       .state('tournaments',{
         url:'/torneos',
