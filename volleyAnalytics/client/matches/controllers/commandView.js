@@ -1,6 +1,49 @@
 angular.module('volleyAnalytics').controller('CommandViewCtrl', ['$scope', '$document',
   function($scope, $document){
 
+    // command = {
+    //             'player': player,
+    //             'action': 'Action',
+    //             'grade' : 'Grade',
+    //             'zone'  : 'Zone'
+    // }
+
+    // stage: {
+    //   'state' : 'saque->k1->k2<->k3',
+    //   'team'  : 'team1/team2'
+    // }
+
+    // action : [{
+    //     'stage': stage,
+    //     'commands' : [command]
+    // }]
+
+    // point : {
+    //   'starter' : 'team1/team2',
+    //   'winner'  : 'team1/team2/null'
+    //   'actions' : [action]
+    // }
+
+    // game : {
+    //   'team1':{'score': pointsnumber},
+    //   'team2':{'score': pointsnumber},
+    //   'points':[point],
+    //   'winner': 'team1/team2'
+    // }
+
+    // match = {
+    //             'team1': {
+    //               'team': newMatch.team1._id,
+    //               'score': 0
+    //             },
+    //             'team2': {
+    //               'team': newMatch.team2._id,
+    //               'score': 0
+    //             },
+    //             'games' : [game]
+    // }
+    $scope.stage = null;
+
     $scope.command = {
                       'player': {'position': 'OP'},
                       'action': 'A',
