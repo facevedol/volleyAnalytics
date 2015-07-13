@@ -1,0 +1,14 @@
+<div style="width:400px;">
+  <div style="float:left;">
+    <strong>{{team1.name}}</strong> {{match.team1.score}}
+    <ul>
+      <li ng-repeat="player in players | inTeam:team1">{{player.name}} - {{player.position}}</li>
+    </ul>
+  </div>
+  <div style="float:right;">
+    {{match.team2.score}} <strong>{{team2.name}}</strong>
+    <ul>
+      <li ng-repeat="player in players | inTeam:team2">{{player.name}} - {{player.position}}</li>
+    </ul>
+  </div>
+</div>

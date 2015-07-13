@@ -5,7 +5,7 @@ Detalles del Torneo
 
 <button ng-click="save()">Guardar</button>
 <button ng-click="reset()">Reset</button>
-<button><a href="/equipos">Cancel</a></button>
+<button><a href="/torneos">Cancel</a></button>
 <br>
 Partidos:
 <form>
@@ -20,7 +20,10 @@ Partidos:
 
 <ul>
   <li ng-repeat="match in matches">
-    Hay un partido aquí
-    <button ng-click="console.log(match)">X</button>
+    {{loadTeams(match)}}
+    {{team1.name}} <strong>{{match.team1.score}}</strong> -
+    <strong>{{match.team2.score}}</strong> {{team2.name}}
+    <button><a href="/partidos/{{match._id}}">Go In!</a></button>
+    <button ng-click="remove(match);">X</button>
   </li>
 </ul>

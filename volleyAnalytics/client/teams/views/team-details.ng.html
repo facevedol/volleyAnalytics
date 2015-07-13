@@ -15,7 +15,7 @@ Jugadores:
   <label>Edad</label>
   <input ng-model="newPlayer.age">
   <label>Número Camiseta</label>
-  <input ng-model="newPlaer.number">
+  <input ng-model="newPlayer.number">
   <label>Posición</label>
   <select ng-model="newPlayer.position">
     <option value="C">Central</option>
@@ -30,7 +30,7 @@ Jugadores:
 <ul>
   <li ng-repeat="p in players | inTeam:team">
     <strong>{{p.name}}</strong> -
-    {{p.position}}
-    <button ng-click="remove(player)">X</button>
+    {{p.position}} : # {{p.number}}
+    <button ng-click="remove(p)">X</button>
   </li>
 </ul>
