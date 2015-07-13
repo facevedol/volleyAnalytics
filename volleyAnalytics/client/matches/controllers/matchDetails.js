@@ -9,23 +9,23 @@ angular.module('volleyAnalytics').controller('MatchDetailsCtrl', ['$scope', '$st
         'team1': {
           'team': $scope.team1,
           'keys': {
-            'q': null,
-            'w': null,
-            'e': null,
-            'a': null,
-            's': null,
-            'd': null,
+            'Q': null,
+            'W': null,
+            'E': null,
+            'A': null,
+            'S': null,
+            'D': null,
           }
         },
         'team2': {
           'team': $scope.team2,
           'keys': {
-            'q': null,
-            'w': null,
-            'e': null,
-            'a': null,
-            's': null,
-            'd': null,
+            'U': null,
+            'I': null,
+            'O': null,
+            'J': null,
+            'K': null,
+            'L': null,
           }
         },
       };

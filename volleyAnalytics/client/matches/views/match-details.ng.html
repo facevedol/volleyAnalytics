@@ -1,5 +1,10 @@
-<div class="wrapper">
+<div class="wrapperL" style="float:left;">
   <div ui-view="teamList" style="width:500px;  overflow:hidden;"></div>
   <div ui-view="keyboardLayout" style="width: 480px;border:solid;"></div>
+  <br>
   <div ui-view="fieldView" style="overflow:hidden;"></div>
+</div>
+
+<div class="wrapperR" style="float:right;">
+  <div ui-view="commandView"></div>
 </div>

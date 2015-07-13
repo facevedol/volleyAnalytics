@@ -27,6 +27,10 @@ angular.module('volleyAnalytics').config(['$urlRouterProvider', '$stateProvider'
           'fieldView@matchDetails': {
             templateUrl: 'client/matches/views/field-view.ng.html',
             controller: 'FieldViewCtrl'
+          },
+          'commandView@matchDetails': {
+            templateUrl: 'client/matches/views/command-view.ng.html',
+            controller: 'CommandViewCtrl'
           }
         }
       })
