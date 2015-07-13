@@ -23,6 +23,10 @@ angular.module('volleyAnalytics').config(['$urlRouterProvider', '$stateProvider'
           'keyboardLayout@matchDetails': {
             templateUrl: 'client/matches/views/keyboard-layout.ng.html',
             controller: 'KeyboardLayoutCtrl'
+          },
+          'fieldView@matchDetails': {
+            templateUrl: 'client/matches/views/field-view.ng.html',
+            controller: 'FieldViewCtrl'
           }
         }
       })

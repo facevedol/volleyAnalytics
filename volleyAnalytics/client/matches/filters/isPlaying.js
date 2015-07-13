@@ -3,16 +3,17 @@ angular.module('volleyAnalytics').filter('isPlaying', function() {
     if(!playing) {
       return false;
     }
-    if(!thisP) {
-      return false;
+    var t = true;
+    if(!thisP){
+      t = !t;
     }
     return _.filter(players, function(player) {
       for(var k in playing){
         if (playing[k] == player && k != thisP) {
-          return false;
+          return !t;
         }
       }
-      return true;
+      return t;
 
     });
   }

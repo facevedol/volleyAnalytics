@@ -1,10 +1,13 @@
 <div ng-repeat="(keyT, keyTeam) in keyboard" style="display: inline;">
   <div ng-repeat="(keyP, keyPlayer) in keyTeam.keys" style="width: 200px; display: inline; ">
   {{keyP}}:
-  <select ng-options="player.name for player in players |
+  <select ng-options="player.number for player in players |
                         inTeam:keyTeam.team |
-                        isPlaying:keyboard[keyT]['keys']: keyP"
+                        isPlaying:keyboard[keyT]['keys']: keyP |
+                        orderBy: 'number'
+                        "
           ng-model="keyboard[keyT]['keys'][keyP]"></select>
+  <strong>{{keyboard[keyT]['keys'][keyP].position}} </strong>
   </div>
   <hr ng-if="$first">
 </div>

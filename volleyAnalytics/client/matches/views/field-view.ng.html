@@ -1,0 +1,122 @@
+<div class="fieldContainer" style="width:313px; border:solid;">
+
+  <div class="t1side backline">
+    <div class="pos1" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team1']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team1']['positions']['pos1']"></select>
+      <strong>{{field['team1']['positions']['pos1'].position}}</strong>
+    </div>
+
+    <div class="pos6"  style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team1']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team1']['positions']['pos6']"></select>
+      <strong>{{field['team1']['positions']['pos6'].position}}</strong>
+    </div>
+
+    <div class="pos5"  style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team1']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team1']['positions']['pos5']"></select>
+      <strong>{{field['team1']['positions']['pos5'].position}}</strong>
+    </div>
+  </div>
+
+  <div class="t1side frontline">
+    <div class="pos2" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team1']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team1']['positions']['pos2']"></select>
+      <strong>{{field['team1']['positions']['pos2'].position}}</strong>
+    </div>
+
+    <div class="pos3" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team1']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team1']['positions']['pos3']"></select>
+      <strong>{{field['team1']['positions']['pos3'].position}}</strong>
+    </div>
+
+    <div class="pos4" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team1']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team1']['positions']['pos4']"></select>
+      <strong>{{field['team1']['positions']['pos4'].position}}</strong>
+    </div>
+  </div>
+  <button ng-click="rotate('team1')">Rotate!</button>
+
+  <hr>
+
+  <div class="t2side frontline">
+    <div class="pos4" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team2']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team2']['positions']['pos4']"></select>
+      <strong>{{field['team2']['positions']['pos4'].position}}</strong>
+    </div>
+
+    <div class="pos3" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team2']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team2']['positions']['pos3']"></select>
+      <strong>{{field['team2']['positions']['pos3'].position}}</strong>
+    </div>
+
+    <div class="pos2" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team2']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team2']['positions']['pos2']"></select>
+      <strong>{{field['team2']['positions']['pos2'].position}}</strong>
+    </div>
+  </div>
+
+  <div class="t2side backline">
+    <div class="pos5" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team2']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team2']['positions']['pos5']"></select>
+      <strong>{{field['team2']['positions']['pos5'].position}}</strong>
+    </div>
+
+    <div class="pos6" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team2']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team2']['positions']['pos6']"></select>
+      <strong>{{field['team2']['positions']['pos6'].position}}</strong>
+    </div>
+
+    <div class="pos1" style="width:100px; display:inline-block;">
+      <select ng-options="player.number for player in players |
+                            isPlaying:keyboard['team2']['keys'] |
+                            orderBy: 'number'
+                            "
+              ng-model="field['team2']['positions']['pos1']"></select>
+      <strong>{{field['team2']['positions']['pos1'].position}}</strong>
+    </div>
+  </div>
+  <button ng-click="rotate('team2')">Rotate!</button>
+</div>
