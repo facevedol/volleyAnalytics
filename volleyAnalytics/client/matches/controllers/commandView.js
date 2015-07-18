@@ -42,13 +42,26 @@ angular.module('volleyAnalytics').controller('CommandViewCtrl', ['$scope', '$doc
     //             },
     //             'games' : [game]
     // }
-    $scope.stage = null;
+
+    $scope.point = {
+      'starter' : null,
+      'winner'  : null,
+      'actions' : []
+    };
+
+    $scope.action = {
+        'stage': {
+          'state' : null,
+          'team'  : null
+        },
+        'commands' : []
+    };
 
     $scope.command = {
-                      'player': {'position': 'OP'},
-                      'action': 'A',
-                      'grade' : 'G',
-                      'zone'  : 'Z'
+                'player': null,
+                'action': null,
+                'grade' : null,
+                'zone'  : null
     };
 
     function evalPlayer(key) {
@@ -90,18 +103,18 @@ angular.module('volleyAnalytics').controller('CommandViewCtrl', ['$scope', '$doc
     }
 
     function evalZone(key) {
-      var map = { 'Q' : {'team':'T1', 'zone':'1'},
-                  'W' : {'team':'T1', 'zone':'6'},
-                  'E' : {'team':'T1', 'zone':'5'},
-                  'A' : {'team':'T1', 'zone':'2'},
-                  'S' : {'team':'T1', 'zone':'3'},
-                  'D' : {'team':'T1', 'zone':'4'},
-                  'U' : {'team':'T2', 'zone':'4'},
-                  'I' : {'team':'T2', 'zone':'3'},
-                  'O' : {'team':'T2', 'zone':'2'},
-                  'J' : {'team':'T2', 'zone':'5'},
-                  'K' : {'team':'T2', 'zone':'6'},
-                  'L' : {'team':'T2', 'zone':'1'},
+      var map = { 'Q' : {'team':$scope.team1._id, 'zone':'1'},
+                  'W' : {'team':$scope.team1._id, 'zone':'6'},
+                  'E' : {'team':$scope.team1._id, 'zone':'5'},
+                  'A' : {'team':$scope.team1._id, 'zone':'2'},
+                  'S' : {'team':$scope.team1._id, 'zone':'3'},
+                  'D' : {'team':$scope.team1._id, 'zone':'4'},
+                  'U' : {'team':$scope.team2._id, 'zone':'4'},
+                  'I' : {'team':$scope.team2._id, 'zone':'3'},
+                  'O' : {'team':$scope.team2._id, 'zone':'2'},
+                  'J' : {'team':$scope.team2._id, 'zone':'5'},
+                  'K' : {'team':$scope.team2._id, 'zone':'6'},
+                  'L' : {'team':$scope.team2._id, 'zone':'1'},
                 };
       return map[key];
     }
@@ -155,8 +168,46 @@ angular.module('volleyAnalytics').controller('CommandViewCtrl', ['$scope', '$doc
     }
 
     function saveCommand() {
-      ;
+      // Point setup
+      if ($scope.point.starter == null) {
+        $scope.point.starter = $scope.command.player.team;
+        $scope.point.actions = [{
+          stage : {'state' : null, 'team' : null},
+          commands : []
+        }];
+        $scope.action = $scope.point.actions[$scope.point.actions.length-1];
+      }
+
+      // Action Setup
+      if ($scope.action.stage.state == null) {
+        $scope.action.stage.state = 'saque';
+        $scope.action.stage.team = $scope.command.player.team;
+      }
+
+      if ($scope.command.player.team != $scope.action.stage.team) {
+
+
+        if ( $scope.action.stage.state == 'saque' ){
+          $scope.point.actions.push({
+            stage : {'state' : 'k1', 'team' : $scope.command.player.team},
+            commands : []
+          });
+        } else {
+          $scope.point.actions.push({
+            stage : {'state' : 'k2', 'team' : $scope.command.player.team},
+            commands : []
+          });
+        }
+
+        $scope.action = $scope.point.actions[$scope.point.actions.length-1];
+
+      }
+
+      // Command Save
+      $scope.action.commands.push($scope.command);
+      console.log($scope.point);
     }
+
     function writeCommand(e) {
       if(e.which == 8) {
         rmAction();

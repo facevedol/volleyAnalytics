@@ -4,7 +4,8 @@
    <li style="display:inline">{{command.player.position}}</li>
    <li style="display:inline">{{command.action}}</li>
    <li style="display:inline">{{command.grade}}</li>
-   <li ng-if="command.zone" style="display:inline">{{command.zone.team}}-{{command.zone.zone}}</li>
+   <li ng-if="command.zone.team == team1._id" style="display:inline">T1-{{command.zone.zone}}</li>
+   <li ng-if="command.zone.team == team2._id" style="display:inline">T2-{{command.zone.zone}}</li>
  </ul>
 </div>
 
