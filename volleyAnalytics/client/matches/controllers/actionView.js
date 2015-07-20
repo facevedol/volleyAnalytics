@@ -1,5 +1,5 @@
-angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$document',
-  function($scope, $document){
+angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$document', '$meteor',
+  function($scope, $document, $meteor){
 
     // action = {
     //             'player': player,
@@ -43,25 +43,25 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
     //             'games' : [game]
     // }
 
-    $scope.rally = {
-      'starter' : null,
-      'winner'  : null,
-      'volleys' : []
-    };
-
-    $scope.volley = {
-        'stage': {
-          'state' : null,
-          'team'  : null
-        },
-        'actions' : []
-    };
-
+    // $scope.rally = {
+    //   'starter' : null,
+    //   'winner'  : null,
+    //   'volleys' : []
+    // };
+    //
+    // $scope.volley = {
+    //     'stage': {
+    //       'state' : null,
+    //       'team'  : null
+    //     },
+    //     'actions' : []
+    // };
+    //
     $scope.action = {
                 'player': null,
                 'action': null,
                 'grade' : null,
-                'zone'  : null
+                'target'  : null
     };
 
     function evalPlayer(key) {
@@ -102,7 +102,7 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
       }
     }
 
-    function evalZone(key) {
+    function evalTarget(key) {
       var map = { 'Q' : {'team':$scope.team1._id, 'zone':'1'},
                   'W' : {'team':$scope.team1._id, 'zone':'6'},
                   'E' : {'team':$scope.team1._id, 'zone':'5'},
@@ -140,9 +140,19 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
       }else if ($scope.action.grade == null) {
         key2 = evalGrade(key);
         changeField('grade',key2);
-      }else if ($scope.action.zone2 == null) {
-        key2 = evalZone(key);
-        changeField('zone',key2);
+      }else if ($scope.action.target == null) {
+        key2 = evalTarget(key);
+        changeField('target',key2);
+      }
+      switch (key) {
+        case 'R':
+          score($scope.team1._id);
+          break;
+        case 'Y':
+          score($scope.team2._id);
+          break;
+        default:
+          ;
       }
     }
 
@@ -153,7 +163,7 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
         changeField('grade', null);
       }else if ($scope.action.action != null) {
         changeField('action', null);
-      }else if ($scope.action.z1 !=null) {
+      }else if ($scope.action.player !=null) {
         changeField('player', null);
       }
     }
@@ -167,45 +177,109 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
       });
     }
 
-    function saveAction() {
-      // rally setup
-      if ($scope.rally.starter == null) {
-        $scope.rally.starter = $scope.action.player.team;
-        $scope.rally.volleys = [{
-          stage : {'state' : null, 'team' : null},
-          actions : []
-        }];
-        $scope.volley = $scope.rally.volleys[$scope.rally.volleys.length-1];
+    function score(team) {
+      // rally =  $meteor.object(Rallies, $scope.rally._id,false);
+      // rally.winner = team;
+      // rally.save();
+    
+      Rallies.update($scope.rally._id, {$set:{winner:team}});
+      console.log(Rallies.findOne({game:$scope.game._id},{sort:{time:-1}}));
+    }
+
+    function getLastGame(matchId) {
+      var game = Games.findOne({match:matchId},{sort:{time:-1}});
+      if(!game){
+        game = newGame(matchId);
       }
+      return game;
+    }
 
-      // volley Setup
-      if ($scope.volley.stage.state == null) {
-        $scope.volley.stage.state = 'saque';
-        $scope.volley.stage.team = $scope.action.player.team;
+    function getLastRally(gameId) {
+      var rally = Rallies.findOne({game:gameId},{sort:{time:-1}});
+      if(!rally){
+        rally = newRally(gameId);
       }
+      return rally;
+    }
 
-      if ($scope.action.player.team != $scope.volley.stage.team) {
+    function getLastVolley(rallyId) {
+      var volley = Volleys.findOne({rally:rallyId},{sort:{time:-1}});
+      if(!volley){
+        volley = newVolley(rallyId);
+      }
+      return volley;
+    }
 
+    function newGame(matchId) {
+      gameId = Games.insert({
+        match: matchId,
+        team1: {
+          teamId : $scope.team1._id,
+          score : 0
+        },
+        team2: {
+          teamId : $scope.team2._id,
+          score : 0
+        },
+        winner : null,
+        time : new Date()
+      });
+      return Games.findOne({_id : gameId});
+    }
 
-        if ( $scope.volley.stage.state == 'saque' ){
-          $scope.rally.volleys.push({
-            stage : {'state' : 'k1', 'team' : $scope.action.player.team},
-            actions : []
-          });
-        } else {
-          $scope.rally.volleys.push({
-            stage : {'state' : 'k2', 'team' : $scope.action.player.team},
-            actions : []
-          });
+    function newRally(gameId, starter) {
+      rallyId = Rallies.insert({
+        game: gameId,
+        starter : starter || $scope.action.player.team,
+        winner : null,
+        time : new Date()
+      });
+      return Rallies.findOne({_id : rallyId});
+    }
+
+    function newVolley(rallyId, team) {
+      last = Volleys.findOne({rally:rallyId},{sort:{time:-1}});
+      if (! last )
+        state = 'saque'
+      else {
+        switch (last.state) {
+          case 'saque':
+            state = 'k1';
+            break;
+          default:
+            state = 'k2';
+            break;
         }
-
-        $scope.volley = $scope.rally.volleys[$scope.rally.volleys.length-1];
-
       }
+      volleyId = Volleys.insert({
+        rally : rallyId,
+        state : state,
+        team : team || $scope.action.player.team,
+        time : new Date()
+      });
+      return Volleys.findOne({_id : volleyId});
+    }
 
-      // action Save
-      $scope.volley.actions.push($scope.action);
-      console.log($scope.rally);
+    function saveAction() {
+      // match>game>rally>volley>action
+      if (! $scope.game)
+        $scope.game = getLastGame($scope.match._id);
+      if (! $scope.rally)
+        $scope.rally = getLastRally($scope.game._id);
+      if (! $scope.volley)
+        $scope.volley = getLastVolley($scope.rally._id);
+
+      var action = Actions.insert({
+        player: $scope.action.player._id,
+        action: $scope.action.action,
+        grade : $scope.action.grade,
+        target  : $scope.action.target,
+        volley : $scope.volley._id,
+        time : new Date()
+      });
+
+
+      console.log(Actions.find({volley:$scope.volley._id},{sort:{time:-1}}).fetch());
     }
 
     function writeaction(e) {
