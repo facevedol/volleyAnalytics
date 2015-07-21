@@ -4,7 +4,7 @@ angular.module('volleyAnalytics').controller('MatchDetailsCtrl', ['$scope', '$st
       $scope.team1 = $meteor.object(Teams, $scope.match.team1.team, false);
       $scope.team2 = $meteor.object(Teams, $scope.match.team2.team, false);
       $scope.players = $meteor.collection(Players);
-      $scope.games = [];
+      $scope.games = Games.find({match:$scope.match._id},{sort:{time:-1}}).fetch();
 
       $scope.keyboard = {
         'team1': {
@@ -31,36 +31,47 @@ angular.module('volleyAnalytics').controller('MatchDetailsCtrl', ['$scope', '$st
         },
       };
 
-      $scope.updateScore = function() {
-        sT1 = 0;
-        sT2 = 0;
-        games = [];
-        gamesResult = Games.find({match:$scope.match._id},{sort:{time:-1}}).fetch();
-        gamesId = gamesResult.map(function(g){return g._id;});
-        console.log(gamesId);
-        for(i = 0; i<gamesId.length; i++) {
-          rallies = Rallies.find({game:gamesId[i]}).fetch();
-          console.log(rallies);
-          for(j=0; j<rallies.length; j++) {
-            if(rallies[j].winner == $scope.team1._id)
-              sT1++;
-            else if (rallies[j].winner == $scope.team2._id)
-              sT2++;
-          }
-          games.push({
-            _id : gamesId[i],
-            team1 : {score: sT1},
-            team2 : {score: sT2}
-          });
+      $scope.updateMatchScore = function() {
+        gamesT1 = Games.find({match:$scope.match._id, winner:$scope.team1._id},{sort:{time:-1}}).fetch();
+        gamesT2 = Games.find({match:$scope.match._id, winner:$scope.team2._id},{sort:{time:-1}}).fetch();
+        if(!gamesT1) {
+          sT1 = 0;
+        } else {
+          sT1 = gamesT1.length;
         }
-        if(!$scope.$$phase){
-          $scope.$apply(function(){$scope.games = games;});
+        if(!gamesT2) {
+          sT2 = 0;
+        } else {
+          sT2 = gamesT2.length;
+        }
+        if(!$scope.$$phase) {
+          Matches.update($scope.match._id, {$set:{'team1.score':sT1, 'team2.score':sT2}});
+          $scope.match = $meteor.object(Matches, $stateParams.matchId, false);
         }
         else {
-          $scope.games = games;
+          Matches.update($scope.match._id, {$set:{'team1.score':sT1, 'team2.score':sT2}});
+          $scope.match = $meteor.object(Matches, $stateParams.matchId, false);
         }
+      }
+
+      $scope.updateGameScore = function(gameId, teamId) {
+
+        if(teamId == $scope.team1._id) {
+          Games.update(gameId, {$inc:{'team1.score':1}});
+        }
+        if(teamId == $scope.team2._id) {
+          Games.update(gameId, {$inc:{'team2.score':1}});
+        }
+        if(!$scope.$$phase) {
+          $scope.$apply(function(){$scope.games = Games.find({match:$scope.match._id},{sort:{time:-1}}).fetch();});
+        }
+        else {
+          $scope.games = Games.find({match:$scope.match._id},{sort:{time:-1}}).fetch();
+        }
+
+
         console.log($scope.games);
       }
-      $scope.updateScore();
+      $scope.updateGameScore();
 
 }]);
