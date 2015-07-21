@@ -1,7 +1,12 @@
 <div style="float:left; width:45%; margin-right: 5px;">
   <div style="text-align: right;">
     <strong>{{team1.name}}</strong> {{match.team1.score}}
+    <br>
+    <ul style="list-style-type:none;">
+      <li ng-repeat="g in games">{{g.team1.score}}</li>
+    </ul>
   </div>
+
   <ul>
     <li ng-repeat="player in players | inTeam:team1 | orderBy: 'number'">
       <strong>{{player.number}}: </strong>{{player.name}} - {{player.position}}
@@ -11,6 +16,10 @@
 <div style="float:right; width:45%; margin-left:5px;">
   <div style="text-align:left;">
     {{match.team2.score}} <strong>{{team2.name}}</strong>
+    <br>
+    <ul style="list-style-type:none;">
+      <li ng-repeat="g in games">{{g.team2.score}}</li>
+    </ul>
   </div>
   <ul>
     <li ng-repeat="player in players | inTeam:team2 | orderBy: 'number'">
