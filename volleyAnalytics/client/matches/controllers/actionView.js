@@ -64,6 +64,29 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
                 'target'  : null
     };
 
+    $scope.actionLog = [];
+
+    function updateLog() {
+      ralliesId = [];
+      volleysId = [];
+
+      ralliesResult = Rallies.find({game : $scope.game._id},
+                                {sort:{time:-1}, fields: {_id:1}}).fetch();
+      ralliesId = ralliesResult.map(function(i){return i._id});
+      volleysResult = Volleys.find({rally:{$in:ralliesId}},
+                                {sort:{time:-1}, fields: {_id:1}}).fetch();
+      volleysId = volleysResult.map(function(i){return i._id});
+      actionsResult = Actions.find({volley:{$in:volleysId}},
+                                      {sort:{time:-1}}).fetch();
+      $scope.actionLog = actionsResult.map(function(a) {
+        return {
+          player : Players.findOne({_id:a.player}),
+          action : a.action,
+          grade : a.grade,
+          target : a.target
+        };
+      })
+    }
     function evalPlayer(key) {
         var pl = null;
         pl = $scope.keyboard.team1.keys[key];
@@ -181,7 +204,7 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
       // rally =  $meteor.object(Rallies, $scope.rally._id,false);
       // rally.winner = team;
       // rally.save();
-    
+
       Rallies.update($scope.rally._id, {$set:{winner:team}});
       console.log(Rallies.findOne({game:$scope.game._id},{sort:{time:-1}}));
     }
@@ -260,6 +283,15 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
       return Volleys.findOne({_id : volleyId});
     }
 
+    function initGame() {
+      if (! $scope.game)
+        $scope.game = getLastGame($scope.match._id);
+      if (! $scope.rally)
+        $scope.rally = getLastRally($scope.game._id);
+      if (! $scope.volley)
+        $scope.volley = getLastVolley($scope.rally._id);
+    }
+
     function saveAction() {
       // match>game>rally>volley>action
       if (! $scope.game)
@@ -278,7 +310,7 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
         time : new Date()
       });
 
-
+      updateLog();
       console.log(Actions.find({volley:$scope.volley._id},{sort:{time:-1}}).fetch());
     }
 
@@ -300,6 +332,9 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
         }
       }
     }
+
+    initGame();
+    updateLog();
 
     $document.on('keydown', writeaction);
 }]);

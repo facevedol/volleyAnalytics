@@ -11,4 +11,9 @@
 
 <div class="actionLog">
   Action Log!
+  <ul>
+    <li ng-repeat="ac in actionLog">
+      {{ac.player.position}} - {{ac.action}} - {{ac.grade}} - {{ac.target.zone}}
+    </li>
+  </ul>
 </div>
