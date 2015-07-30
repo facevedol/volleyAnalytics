@@ -58,7 +58,7 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
     // };
     //
     $scope.action = {
-                'player': {'team' : $scope.team1._id},
+                'player': null,
                 'action': null,
                 'grade' : null,
                 'target'  : null
@@ -342,12 +342,15 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
 
     function saveAction() {
       // match>game>rally>volley>action
-      if (! $scope.game)
+      if (! $scope.game){
         $scope.game = newGame($scope.match._id);
-      if (! $scope.rally)
-        $scope.rally = newRally($scope.game._id);
-      if (! $scope.volley)
-        $scope.volley = newVolley($scope.rally._id);
+      }
+      if (! $scope.rally){
+        $scope.rally = newRally($scope.game._id, $scope.action.player.team);
+      }
+      if (! $scope.volley){
+        $scope.volley = newVolley($scope.rally._id, $scope.action.player.team);
+      }
 
       var action = Actions.insert({
         player: $scope.action.player._id,
@@ -381,8 +384,8 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
       }
     }
 
-    initGame();
-    updateLog();
+    //initGame(); Always create a new game after enter a match
+    // updateLog();
 
     $document.on('keydown', writeaction);
 }]);
