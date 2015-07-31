@@ -1,17 +1,36 @@
-<form>
-  <label>Nombre</label>
-  <input ng-model="newTeam.name">
-  <label>Nombre Corto</label>
-  <input ng-model="newTeam.shortName">
-  <label>Institución</label>
-  <input ng-model="newTeam.institution">
-  <button ng-click="teams.save(newTeam); newTeam='';">Add</button>
+<div class="page-header">
+  <h2>Nuevo Equipo</h2>
+</div>
+
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <label for="name">Nombre</label>
+    <input id="name" class="form-control" ng-model="newTeam.name">
+  </div>
+  <div class="form-group">
+    <label for="shortname">Nombre Corto</label>
+    <input id="shortname" class="form-control" ng-model="newTeam.shortName">
+  </div>
+  <div class="form-group">
+    <label for="institution">Institución</label>
+    <input id="institution" class="form-control" ng-model="newTeam.institution">
+  </div>
+  <button class="btn btn-default" type="submit" ng-click="teams.save(newTeam); newTeam='';">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+  </button>
 </form>
 
-<ul>
-  <li ng-repeat="team in teams">
-    <a href="/equipos/{{team._id}}">{{team.name}}</a>
-    <p>{{team.institution}}</p>
-    <button ng-click="remove(team)">X</button>
+<div class="page-header">
+  <h2>Equipos</h2>
+</div>
+<ul class="list-group">
+  <li class="list-group-item clearfix" ng-repeat="team in teams">
+    <button class="btn btn-default">
+      <a href="/equipos/{{team._id}}">{{team.name}}</a>
+    </button>
+    {{team.institution}}
+    <button class="btn btn-default pull-right" ng-click="remove(team)">
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </button>
   </li>
 </ul>
