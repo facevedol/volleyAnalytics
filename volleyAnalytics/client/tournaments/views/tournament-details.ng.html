@@ -1,29 +1,52 @@
-Detalles del Torneo
-<input ng-model="tournament.name">
-<input ng-model="tournament.category">
-<input ng-model="tournament.place">
+<div class="page-header">
+  <h2>Detalles del Torneo</h2>
+</div>
 
-<button ng-click="save()">Guardar</button>
-<button ng-click="reset()">Reset</button>
-<button><a href="/torneos">Cancel</a></button>
-<br>
-Partidos:
-<form>
-  <label>Equipo1
-    <select ng-options="team.name for team in teams" ng-model="newMatch.team1"></select>
-  </label>
-  <label>Equipo2
-    <select ng-options="team.name for team in teams" ng-model="newMatch.team2"></select>
-  </label>
-  <button ng-click="save(newMatch);newMatch='';">Add</button>
+<form class="form-inline">
+  <div class="form-group">
+    <label for="name">Nombre</label>
+    <input id="name" class="form-control" ng-model="tournament.name">
+  </div>
+  <div class="form-group">
+    <label for="category">Categoría</label>
+    <input id="category" class="form-control" ng-model="tournament.category">
+  </div>
+  <div class="form-group">
+    <label for="place"></label>
+    <input id="place" class="form-control" ng-model="tournament.place">
+  </div>
+
+  <button class="btn btn-success" ng-click="save()">Guardar</button>
+  <button class="btn btn-primary" ng-click="reset()">Reset</button>
+  <button class="btn btn-danger"><a class="btn-danger" href="/torneos">Cancel</a></button>
 </form>
 
-<ul>
-  <li ng-repeat="match in matches">
+<div class="page-header">
+  <h2>Partidos</h2>
+</div>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label for="team1">Equipo1 </label>
+    <select id="team1" class="form-control" ng-options="team.name for team in teams" ng-model="newMatch.team1"></select>
+  </div>
+
+  <div class="form-group">
+    <label for="team2">Equipo2</label>
+    <select id="team2" class="form-control" ng-options="team.name for team in teams" ng-model="newMatch.team2"></select>
+  </div>
+
+  <button class="btn btn-default" ng-click="save(newMatch);newMatch='';">Add</button>
+</form>
+
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="match in matches">
     {{loadTeams(match)}}
     {{team1.name}} <strong>{{match.team1.score}}</strong> -
     <strong>{{match.team2.score}}</strong> {{team2.name}}
-    <button><a href="/partidos/{{match._id}}">Go In!</a></button>
-    <button ng-click="remove(match);">X</button>
+    <button class="btn btn-primary"><a class="btn-primary" href="/partidos/{{match._id}}">Go In!</a></button>
+    <button class="btn btn-danger" ng-click="remove(match);">
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </button>
   </li>
 </ul>

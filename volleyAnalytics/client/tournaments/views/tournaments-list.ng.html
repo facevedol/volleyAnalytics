@@ -1,17 +1,31 @@
-<form>
-  <label>Nombre</label>
-  <input ng-model="newTournament.name">
-  <label>Categoría</label>
-  <input ng-model="newTournament.category">
-  <label>Lugar</label>
-  <input ng-model="newTournament.place">
-  <button ng-click="tournaments.save(newTournament); newTournament='';">Add</button>
+<div class="page-header">
+  <h2>Nuevo Torneo</h2>
+</div>
+<form class="form-inline">
+  <div class="form-group">
+    <label for="name">Nombre</label>
+    <input id="name" class="from-control" ng-model="newTournament.name">
+  </div>
+  <div class="form-group">
+    <label for="category">Categoría</label>
+    <input id="category" class="form-control" ng-model="newTournament.category">
+  </div>
+  <div class="form-group">
+    <label for="place">Lugar</label>
+    <input id="place" class="form-control" ng-model="newTournament.place">
+  </div>
+  <button class="btn btn-default" ng-click="tournaments.save(newTournament); newTournament='';">Add</button>
 </form>
 
-<ul>
-  <li ng-repeat="tournament in tournaments">
+<div class="page-header">
+  <h2>Torneos</h2>
+</div>
+<ul class="list-group">
+  <li class="list-group-item clearfix" ng-repeat="tournament in tournaments">
     <a href="/torneos/{{tournament._id}}">{{tournament.name}}</a>
-    <p>{{tournament.place}}</p>
-    <button ng-click="remove(tournament)">X</button>
+    {{tournament.place}}
+    <button class="btn btn-default pull-right" ng-click="remove(tournament)">
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </button>
   </li>
 </ul>
