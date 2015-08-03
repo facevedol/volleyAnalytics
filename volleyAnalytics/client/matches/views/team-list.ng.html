@@ -1,28 +1,29 @@
-<div style="float:left; width:45%; margin-right: 5px;">
-  <div style="text-align: right;">
-    <strong>{{team1.name}}</strong> {{match.team1.score}}
+<div class="col-lg-6 pull-left text-right">
+  <div class="page-header">
+    <h2>{{team1.name}} {{match.team1.score}} </h2>
     <br>
-    <ul style="list-style-type:none;">
-      <li ng-repeat="g in games">{{g.team1.score}}</li>
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="g in games">{{g.team1.score}}</li>
     </ul>
   </div>
-
-  <ul>
-    <li ng-repeat="player in players | inTeam:team1 | orderBy: 'number'">
+  <h3><a class="btn btn-default" data-toggle="collapse" href="#players1">Jugadores</a></h3>
+  <ul id="players1" class="list-group collapse">
+    <li class="list-group-item" ng-repeat="player in players | inTeam:team1 | orderBy: 'number'">
       <strong>{{player.number}}: </strong>{{player.name}} - {{player.position}}
     </li>
   </ul>
 </div>
-<div style="float:right; width:45%; margin-left:5px;">
-  <div style="text-align:left;">
-    {{match.team2.score}} <strong>{{team2.name}}</strong>
+<div class="col-lg-6 pull-right">
+  <div class="page-header">
+    <h2>{{match.team2.score}} {{team2.name}}</h2>
     <br>
-    <ul style="list-style-type:none;">
-      <li ng-repeat="g in games">{{g.team2.score}}</li>
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="g in games">{{g.team2.score}}</li>
     </ul>
   </div>
-  <ul>
-    <li ng-repeat="player in players | inTeam:team2 | orderBy: 'number'">
+  <h3><a class="btn btn-default" data-toggle="collapse" href="#players2">Jugadores</a></h3>
+  <ul id="players2" class="list-group collapse">
+    <li class="list-group-item" ng-repeat="player in players | inTeam:team2 | orderBy: 'number'">
       <strong>{{player.number}}: </strong>{{player.name}} - {{player.position}}
     </li>
   </ul>

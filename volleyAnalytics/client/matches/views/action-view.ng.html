@@ -1,18 +1,22 @@
-<div class="commandWriter">
-  Action Writer!
- <ul>
-   <li style="display:inline">{{action.player.position}}</li>
-   <li style="display:inline">{{action.action}}</li>
-   <li style="display:inline">{{action.grade}}</li>
-   <li ng-if="action.target.team == team1._id" style="display:inline">T1-{{action.target.zone}}</li>
-   <li ng-if="action.target.team == team2._id" style="display:inline">T2-{{action.target.zone}}</li>
- </ul>
+<div class="container">
+  <div class="page-header">
+    <h3>Action Writer</h3>
+  </div>
+  <ul class="list-inline">
+    <li>{{action.player.position}}</li>
+    <li>{{action.action}}</li>
+    <li>{{action.grade}}</li>
+    <li ng-if="action.target.team == team1._id">T1-{{action.target.zone}}</li>
+    <li ng-if="action.target.team == team2._id">T2-{{action.target.zone}}</li>
+  </ul>
 </div>
 
-<div class="actionLog">
-  Action Log!
-  <ul>
-    <li ng-repeat="ac in actionLog">
+<div class="container">
+  <div class="page-header">
+    <h3>Action Log</h3>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="ac in actionLog">
       {{ac.player.position}} - {{ac.action}} - {{ac.grade}} - {{ac.target.zone}}
     </li>
   </ul>
