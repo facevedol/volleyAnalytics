@@ -234,7 +234,14 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
       // rally =  $meteor.object(Rallies, $scope.rally._id,false);
       // rally.winner = team;
       // rally.save();
-
+      console.log("SCORE!");
+      if($scope.rally.starter == team) {
+        if ( team == $scope.team1._id) {
+          $scope.rotate('team1');
+        } else {
+          $scope.rotate('team2');
+        }
+      }
       Rallies.update($scope.rally._id, {$set:{winner:team}});
       $scope.updateGameScore($scope.game._id, team);
       $scope.rally = null;
