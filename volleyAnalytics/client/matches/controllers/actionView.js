@@ -100,12 +100,12 @@ angular.module('volleyAnalytics').controller('ActionViewCtrl', ['$scope', '$docu
     }
 
     function evalAction(key) {
-      var map = { 'X' : 'A1',
-                  'C' : 'A2',
-                  'V' : 'A3',
-                  'B' : 'A4',
-                  'N' : 'A5',
-                  'M' : 'A6',
+      var map = { 'X' : 'Sa',
+                  'C' : 'Re',
+                  'V' : 'Co',
+                  'B' : 'At',
+                  'N' : 'Bl',
+                  'M' : 'Pp',
                 };
       if ( map[key] != null ) {
         return map[key];
